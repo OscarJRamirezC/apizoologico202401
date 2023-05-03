@@ -44,12 +44,12 @@ router.get("/animals/:id", (req, res) => {
 //endpoint para Modificar un animal usando el id
 router.put("/animals/:id", (req, res) => {
   const { id } = req.params;
-  const { nombre, edad, tipo } = req.body;
+  const { nombre, edad, tipo, fecha } = req.body;
   animalSchema
     .updateOne(
       { _id: id },
       {
-        $set: { nombre, edad, tipo },
+        $set: { nombre, edad, tipo, fecha },
       }
     )
     .then((data) => {
