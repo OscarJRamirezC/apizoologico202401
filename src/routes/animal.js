@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router(); //manejador de rutas de express
 const animalSchema = require("../models/animal"); //Nuevo animal
+const verifyToken = require('./validate_token');
+const { verify } = require("jsonwebtoken");
+
 //endpoint para Nuevo animal
-router.post("/animals", (req, res) => {
+router.post("/animals", verifyToken,(req, res) => {
   const animal = animalSchema({
     nombre: req.body.nombre,
     edad: req.body.edad,
@@ -17,7 +20,8 @@ router.post("/animals", (req, res) => {
 });
 
 //endpoint para Consultar todos los animales
-router.get("/animals", (req, res) => {
+//router.get("/animals", verifyToken, (req, res) => {
+  router.get("/animals", (req, res) => {
   animalSchema
     .find()
     .then((data) => {
