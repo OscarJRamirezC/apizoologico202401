@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router(); //manejador de rutas de express
 const animalSchema = require("../models/animal"); //Nuevo animal
-const verifyToken = require('./validate_token');
+const verifyToken = require("./validate_token");
 const { verify } = require("jsonwebtoken");
 
 //endpoint para Nuevo animal
-router.post("/animals", verifyToken,(req, res) => {
+router.post("/animals", verifyToken, (req, res) => {
   const animal = animalSchema({
     nombre: req.body.nombre,
     edad: req.body.edad,
@@ -20,8 +20,7 @@ router.post("/animals", verifyToken,(req, res) => {
 });
 
 //endpoint para Consultar todos los animales
-//router.get("/animals", verifyToken, (req, res) => {
-  router.get("/animals", (req, res) => {
+router.get("/animals", verifyToken, (req, res) => {
   animalSchema
     .find()
     .then((data) => {
@@ -33,7 +32,7 @@ router.post("/animals", verifyToken,(req, res) => {
 });
 
 //endopoint para Consultar un animal
-router.get("/animals/:id", (req, res) => {
+router.get("/animals/:id", verifyToken, (req, res) => {
   const { id } = req.params;
   animalSchema
     .findOne({ _id: id })
@@ -46,7 +45,7 @@ router.get("/animals/:id", (req, res) => {
 });
 
 //endpoint para Modificar un animal usando el id
-router.put("/animals/:id", (req, res) => {
+router.put("/animals/:id", verifyToken, (req, res) => {
   const { id } = req.params;
   const { nombre, edad, tipo, fecha } = req.body;
   animalSchema
@@ -65,7 +64,7 @@ router.put("/animals/:id", (req, res) => {
 });
 
 //endpoint para Eliminar un animal usando el id
-router.delete("/animals/:id", (req, res) => {
+router.delete("/animals/:id", verifyToken, (req, res) => {
   const { id } = req.params;
   animalSchema
     .findByIdAndDelete({ _id: id })

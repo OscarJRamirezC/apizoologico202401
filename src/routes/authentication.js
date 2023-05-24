@@ -28,6 +28,7 @@ router.post("/signup", async (req, res) => {
 
 //inicio de sesión
 router.post("/login", async (req, res) => {
+  console.log('LOGIN***')
   // validaciones
   const { error } = userSchema.validate(req.body.correo, req.body.clave);
   if (error) return res.status(400).json({ error: error.details[0].message });
